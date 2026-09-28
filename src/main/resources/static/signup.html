@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7fbff">
+    <title>Create account | Carepoint</title>
+    <link rel="stylesheet" href="/tailwind.css">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/public.css">
+</head>
+<body class="public-auth min-h-screen bg-slate-50 text-slate-900">
+<main class="grid min-h-screen lg:grid-cols-[1fr_1fr]">
+    <section class="auth-showcase relative hidden overflow-hidden lg:block">
+        <svg class="auth-illustration" viewBox="0 0 520 440" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="276" cy="220" r="190" fill="#DCEEFF"/>
+            <circle cx="386" cy="102" r="40" fill="#C8E4FC"/>
+            <rect x="85" y="107" width="303" height="251" rx="30" fill="white" stroke="#CFE3F5" stroke-width="3"/>
+            <rect x="111" y="134" width="251" height="25" rx="12.5" fill="#EFF7FF"/>
+            <circle cx="237" cy="204" r="42" fill="#F0C6A6"/>
+            <path d="M195 201C195 173 212 157 238 157C264 157 280 177 276 204C264 190 251 183 237 183C221 183 207 190 195 201Z" fill="#294D70"/>
+            <path d="M160 337C164 272 190 237 237 237C284 237 310 272 314 337H160Z" fill="#2B80BE"/>
+            <path d="M207 240L237 275L267 240L287 337H187L207 240Z" fill="white"/>
+            <rect x="322" y="253" width="114" height="75" rx="18" fill="white"/>
+            <path d="M379 269V301M363 285H395" stroke="#2B80BE" stroke-width="7" stroke-linecap="round"/>
+        </svg>
+        <div class="relative flex h-full flex-col justify-between p-12 xl:p-16">
+            <a href="/" class="flex items-center gap-3 text-xl font-extrabold text-slate-900"><span class="grid h-11 w-11 place-items-center rounded-2xl bg-blue-700 text-2xl text-white">+</span>carepoint</a>
+            <div class="relative z-10 max-w-lg pb-8"><p class="text-xs font-bold uppercase tracking-[.2em] text-blue-700">Your clinic, connected</p><h1 class="mt-4 text-5xl font-extrabold leading-tight tracking-tight text-slate-900">A simpler day starts with a warm welcome.</h1><p class="mt-5 text-lg leading-8 text-slate-600">Create your account to organize appointments, schedules, doctors, and patient records.</p></div>
+            <p class="text-xs text-slate-500">A calmer way to manage the day.</p>
+        </div>
+    </section>
+    <section class="flex items-center justify-center px-5 py-12 sm:px-10">
+        <div class="w-full max-w-md">
+            <a href="/" class="mb-10 inline-flex items-center gap-3 text-lg font-extrabold tracking-tight text-slate-900 lg:hidden"><span class="grid h-10 w-10 place-items-center rounded-xl bg-blue-700 text-xl text-white">+</span>carepoint</a>
+            <p class="text-xs font-bold uppercase tracking-[.18em] text-cyan-800">Carepoint workspace</p>
+            <h1 class="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">Create your account</h1>
+            <p class="mt-2 text-sm leading-6 text-slate-500">Set up an account to access the clinic workspace.</p>
+            <div id="auth-message" class="mt-5 hidden rounded-xl border px-4 py-3 text-sm" role="status" aria-live="polite"></div>
+            <form id="signup-form" class="mt-7 space-y-4">
+                <label class="block"><span class="text-sm font-semibold text-slate-700">Full name</span><input name="name" type="text" autocomplete="name" required maxlength="100" class="mt-2 block w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-700 focus:ring-4 focus:ring-cyan-700/10" placeholder="Your name"></label>
+                <label class="block"><span class="text-sm font-semibold text-slate-700">Email address</span><input name="email" type="email" autocomplete="email" required maxlength="255" class="mt-2 block w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-700 focus:ring-4 focus:ring-cyan-700/10" placeholder="you@clinic.com"></label>
+                <label class="block"><span class="text-sm font-semibold text-slate-700">Password</span><input name="password" type="password" autocomplete="new-password" required minlength="12" maxlength="72" class="mt-2 block w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-700 focus:ring-4 focus:ring-cyan-700/10" placeholder="At least 12 characters"></label>
+                <button class="w-full rounded-xl bg-cyan-800 px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-cyan-900/15 transition hover:bg-cyan-900 focus:outline-none focus:ring-4 focus:ring-cyan-700/20" type="submit">Create account <span aria-hidden="true">→</span></button>
+            </form>
+            <p class="mt-7 text-center text-sm text-slate-500">Already have an account? <a href="/login.html" class="font-bold text-cyan-800 hover:text-cyan-950">Sign in</a></p>
+            <p class="mt-8 text-center text-xs leading-5 text-slate-400"><a href="/" class="font-semibold text-slate-500 hover:text-cyan-800">← Back to Carepoint</a></p>
+        </div>
+    </section>
+</main>
+<script src="/auth.js" defer></script>
+</body>
+</html>

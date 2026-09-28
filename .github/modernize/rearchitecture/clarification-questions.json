@@ -1,0 +1,599 @@
+{
+  "schema": "clarification-questions/v1",
+  "generated_at": "2026-09-28T09:40:00Z",
+  "user_input": "use lombok for clear and efficient code different unique theme and change to professional ui simple and attractive for all pages and home page with login and signup page so that admin can only see dashboard",
+  "title": "Carepoint admin sign-in and clinic UI refresh",
+  "assessment_snapshot": {
+    "intro": "The workspace contains an existing Spring Boot clinic-management application with a static HTML/CSS/JavaScript UI and a configured MySQL connection:",
+    "bullets": [
+      "Spring Boot 4.1.1 / Java 17 with existing doctor, patient, appointment, and schedule APIs",
+      "Static browser UI built with HTML, CSS, and vanilla JavaScript; no frontend framework is currently configured",
+      "MySQL database settings use environment-variable overrides and existing patient/appointment data must be considered",
+      "The request adds login, signup, and admin-only dashboard access; no authentication system or role policy is currently established",
+      "Lombok is already present as a project dependency"
+    ]
+  },
+  "proposed_outcome": "Keep the current Spring Boot and lightweight frontend architecture unless explicitly changed; apply a distinctive, consistent professional theme across public, authentication, and admin pages; add secure login and signup plus server-enforced authorization so only an authenticated admin can access clinic-management APIs and dashboard data; preserve existing patient and appointment data and behavior; use Lombok only where it makes Java code clearer without compromising validation or security.",
+  "scope": [
+    "frontend",
+    "backend",
+    "generic"
+  ],
+  "status": "answered",
+  "questions": [
+    {
+      "id": "F1",
+      "kit": "frontend",
+      "field": "target.framework",
+      "title": "Frontend approach",
+      "question": "Should the redesign keep the existing static HTML/CSS and vanilla JavaScript, or move to a frontend framework?",
+      "importance": "required",
+      "impact": 4,
+      "recommended": "Keep static HTML/CSS and vanilla JavaScript",
+      "default": null,
+      "prefilled": true,
+      "prefilled_value": "Keep static HTML/CSS and vanilla JavaScript",
+      "answer": {
+        "value": "Keep static HTML/CSS and vanilla JavaScript",
+        "source": "user"
+      },
+      "depends_on": null,
+      "options": [
+        {
+          "value": "Keep static HTML/CSS and vanilla JavaScript",
+          "label": "Keep the existing lightweight HTML/CSS/JavaScript (Recommended)"
+        },
+        {
+          "value": "React 19",
+          "label": "React 19"
+        },
+        {
+          "value": "Vue 3",
+          "label": "Vue 3"
+        },
+        {
+          "value": "Other framework",
+          "label": "Specify another framework and version"
+        }
+      ],
+      "allow_other": true,
+      "type": "single_select"
+    },
+    {
+      "id": "F2",
+      "kit": "frontend",
+      "field": "target.component_library",
+      "title": "UI component library",
+      "question": "Which component or styling approach should be used for the refreshed UI?",
+      "importance": "required",
+      "impact": 5,
+      "recommended": "Custom CSS and accessible HTML",
+      "default": null,
+      "prefilled": true,
+      "prefilled_value": "Custom CSS and accessible HTML",
+      "answer": {
+        "value": "Tailwind CSS",
+        "source": "user"
+      },
+      "depends_on": null,
+      "options": [
+        {
+          "value": "Custom CSS and accessible HTML",
+          "label": "Custom CSS and accessible HTML matching a unique clinic brand (Recommended)"
+        },
+        {
+          "value": "Bootstrap 5",
+          "label": "Bootstrap 5"
+        },
+        {
+          "value": "Tailwind CSS",
+          "label": "Tailwind CSS"
+        },
+        {
+          "value": "Other",
+          "label": "Specify another library"
+        }
+      ],
+      "allow_other": true,
+      "type": "single_select"
+    },
+    {
+      "id": "F3",
+      "kit": "frontend",
+      "field": "visual.screenshots",
+      "title": "Visual references",
+      "question": "Should I use the existing Carepoint UI and the previously shared healthcare landing-page screenshot as visual references, or do you have another screenshot or mockup to follow?",
+      "importance": "required",
+      "impact": 4,
+      "recommended": null,
+      "default": null,
+      "prefilled": false,
+      "prefilled_value": null,
+      "answer": {
+        "value": "more attractive doctor website theme u refer and do the professional best ui",
+        "source": "user"
+      },
+      "depends_on": null,
+      "type": "text",
+      "options": []
+    },
+    {
+      "id": "F4",
+      "kit": "frontend",
+      "field": "visual.design_system",
+      "title": "Theme direction",
+      "question": "What design system should guide the new professional theme? Include preferred brand colors, clinic name/logo, and any visual elements to keep or avoid.",
+      "importance": "required",
+      "impact": 5,
+      "recommended": null,
+      "default": null,
+      "prefilled": false,
+      "prefilled_value": null,
+      "answer": {
+        "value": "change color so that it look clean and elegant proffessional look",
+        "source": "user"
+      },
+      "depends_on": null,
+      "type": "text",
+      "options": []
+    },
+    {
+      "id": "F5",
+      "kit": "frontend",
+      "field": "compliance.accessibility",
+      "title": "Accessibility target",
+      "question": "What accessibility standard should the UI target?",
+      "importance": "recommended",
+      "impact": 3,
+      "recommended": "WCAG 2.1 AA",
+      "default": "WCAG 2.1 AA",
+      "prefilled": false,
+      "prefilled_value": null,
+      "answer": {
+        "value": "WCAG 2.1 AA",
+        "source": "user"
+      },
+      "depends_on": null,
+      "options": [
+        {
+          "value": "WCAG 2.1 AA",
+          "label": "WCAG 2.1 AA (Recommended)"
+        },
+        {
+          "value": "WCAG 2.2 AA",
+          "label": "WCAG 2.2 AA"
+        },
+        {
+          "value": "No formal standard",
+          "label": "No formal standard"
+        }
+      ],
+      "allow_other": true,
+      "type": "single_select"
+    },
+    {
+      "id": "F6",
+      "kit": "frontend",
+      "field": "compatibility.browsers",
+      "title": "Browser support",
+      "question": "Which browsers should the redesigned clinic site support?",
+      "importance": "recommended",
+      "impact": 2,
+      "recommended": "Modern Chrome, Edge, Firefox, and Safari",
+      "default": "modern evergreen browsers",
+      "prefilled": false,
+      "prefilled_value": null,
+      "answer": {
+        "value": "Modern Chrome, Edge, Firefox, and Safari",
+        "source": "user"
+      },
+      "depends_on": null,
+      "options": [
+        {
+          "value": "Modern Chrome, Edge, Firefox, and Safari",
+          "label": "Modern Chrome, Edge, Firefox, and Safari (Recommended)"
+        },
+        {
+          "value": "Latest Chrome and Edge only",
+          "label": "Latest Chrome and Edge only"
+        },
+        {
+          "value": "Other browser requirements",
+          "label": "Specify browser requirements"
+        }
+      ],
+      "allow_other": true,
+      "type": "single_select"
+    },
+    {
+      "id": "F7",
+      "kit": "frontend",
+      "field": "responsive.breakpoints",
+      "title": "Responsive layout",
+      "question": "How should the UI adapt to mobile, tablet, and desktop screens?",
+      "importance": "recommended",
+      "impact": 3,
+      "recommended": "Responsive mobile, tablet, and desktop",
+      "default": "mobile-first responsive layout using existing breakpoints",
+      "prefilled": true,
+      "prefilled_value": "Responsive mobile, tablet, and desktop",
+      "answer": {
+        "value": "Responsive mobile, tablet, and desktop",
+        "source": "user"
+      },
+      "depends_on": null,
+      "options": [
+        {
+          "value": "Responsive mobile, tablet, and desktop",
+          "label": "Responsive across mobile, tablet, and desktop (Recommended)"
+        },
+        {
+          "value": "Desktop-first, with basic mobile support",
+          "label": "Desktop-first, with basic mobile support"
+        },
+        {
+          "value": "Other",
+          "label": "Specify layout requirements"
+        }
+      ],
+      "allow_other": true,
+      "type": "single_select"
+    },
+    {
+      "id": "F8",
+      "kit": "frontend",
+      "field": "i18n.locales",
+      "title": "Language support",
+      "question": "Which UI languages should be included?",
+      "importance": "optional",
+      "impact": 1,
+      "recommended": "English only",
+      "default": "preserve current locales",
+      "prefilled": false,
+      "prefilled_value": null,
+      "answer": {
+        "value": "preserve current locales",
+        "source": "user"
+      },
+      "depends_on": null,
+      "options": [
+        {
+          "value": "English only",
+          "label": "English only (Recommended)"
+        },
+        {
+          "value": "English and additional languages",
+          "label": "English and additional languages; specify them"
+        }
+      ],
+      "allow_other": true,
+      "type": "single_select"
+    },
+    {
+      "id": "F9",
+      "kit": "frontend",
+      "field": "state_mgmt.preference",
+      "title": "Frontend state",
+      "question": "What frontend state-management approach do you prefer?",
+      "importance": "optional",
+      "impact": 1,
+      "recommended": "Keep the current vanilla JavaScript approach",
+      "default": "preserve existing pattern",
+      "prefilled": true,
+      "prefilled_value": "Keep the current vanilla JavaScript approach",
+      "answer": {
+        "value": "Keep the current vanilla JavaScript approach",
+        "source": "user"
+      },
+      "depends_on": null,
+      "options": [
+        {
+          "value": "Keep the current vanilla JavaScript approach",
+          "label": "Keep the current lightweight JavaScript approach (Recommended)"
+        },
+        {
+          "value": "Use framework-specific state management",
+          "label": "Use state management for the selected framework"
+        },
+        {
+          "value": "Other",
+          "label": "Specify another approach"
+        }
+      ],
+      "allow_other": true,
+      "type": "single_select"
+    },
+    {
+      "id": "F10",
+      "kit": "frontend",
+      "field": "routing.preference",
+      "title": "Page navigation",
+      "question": "How should public, sign-in, sign-up, and admin pages be routed?",
+      "importance": "optional",
+      "impact": 2,
+      "recommended": "Simple server routes and existing JavaScript navigation",
+      "default": "de-facto router for selected framework",
+      "prefilled": false,
+      "prefilled_value": null,
+      "answer": {
+        "value": "de-facto router for selected framework",
+        "source": "user"
+      },
+      "depends_on": null,
+      "options": [
+        {
+          "value": "Simple server routes and existing JavaScript navigation",
+          "label": "Simple server routes and existing JavaScript navigation (Recommended)"
+        },
+        {
+          "value": "Framework router",
+          "label": "Use the router for the selected framework"
+        },
+        {
+          "value": "Other",
+          "label": "Specify another routing approach"
+        }
+      ],
+      "allow_other": true,
+      "type": "single_select"
+    },
+    {
+      "id": "B1",
+      "kit": "backend",
+      "field": "target.framework",
+      "title": "Backend framework",
+      "question": "Which backend framework and version should remain or be targeted?",
+      "importance": "required",
+      "impact": 3,
+      "recommended": "Keep Spring Boot 4.1.1 and Java 17",
+      "default": null,
+      "prefilled": true,
+      "prefilled_value": "Keep Spring Boot 4.1.1 and Java 17",
+      "answer": {
+        "value": "Keep Spring Boot 4.1.1 and Java 17",
+        "source": "user"
+      },
+      "depends_on": null,
+      "options": [
+        {
+          "value": "Keep Spring Boot 4.1.1 and Java 17",
+          "label": "Keep Spring Boot 4.1.1 and Java 17 (Recommended)"
+        },
+        {
+          "value": "Upgrade Spring Boot",
+          "label": "Upgrade Spring Boot; specify target version"
+        },
+        {
+          "value": "Other",
+          "label": "Specify another framework and version"
+        }
+      ],
+      "allow_other": true,
+      "type": "single_select"
+    },
+    {
+      "id": "B2",
+      "kit": "backend",
+      "field": "api.contract_preservation",
+      "title": "Existing API behavior",
+      "question": "How should the existing clinic API endpoints and their behavior be handled while adding authentication?",
+      "importance": "required",
+      "impact": 5,
+      "recommended": "Preserve endpoint contracts and protect them with authorization",
+      "default": "must preserve",
+      "prefilled": true,
+      "prefilled_value": "Preserve endpoint contracts and protect them with authorization",
+      "answer": {
+        "value": "Preserve endpoint contracts and protect them with authorization",
+        "source": "user"
+      },
+      "depends_on": null,
+      "options": [
+        {
+          "value": "Preserve endpoint contracts and protect them with authorization",
+          "label": "Preserve existing API contracts and add authorization (Recommended)"
+        },
+        {
+          "value": "Version breaking API changes",
+          "label": "Allow breaking changes only under a new API version"
+        },
+        {
+          "value": "Allow breaking changes",
+          "label": "Allow breaking changes; no existing clients need support"
+        }
+      ],
+      "allow_other": true,
+      "type": "single_select"
+    },
+    {
+      "id": "B3",
+      "kit": "backend",
+      "field": "data.migration_strategy",
+      "title": "Account and data migration",
+      "question": "How should authentication accounts be added to the existing MySQL database and clinic data?",
+      "importance": "required",
+      "impact": 5,
+      "recommended": "Add account tables in-place and preserve existing clinic records",
+      "default": "TBD / assess in research phase",
+      "prefilled": false,
+      "prefilled_value": null,
+      "answer": {
+        "value": "Add account tables in-place and preserve existing clinic records",
+        "source": "user"
+      },
+      "depends_on": null,
+      "options": [
+        {
+          "value": "Add account tables in-place and preserve existing clinic records",
+          "label": "Add authentication tables in-place; keep patients, appointments, doctors, and slots (Recommended)"
+        },
+        {
+          "value": "Use a separate authentication database",
+          "label": "Use a separate authentication database"
+        },
+        {
+          "value": "Reset existing data",
+          "label": "Reset data and start with a new schema"
+        },
+        {
+          "value": "Other",
+          "label": "Specify another migration approach"
+        }
+      ],
+      "allow_other": true,
+      "type": "single_select"
+    },
+    {
+      "id": "B4",
+      "kit": "backend",
+      "field": "auth.framework",
+      "title": "Login, signup, and admin access",
+      "question": "Which sign-up and admin access policy do you want? Public signup must not let users grant themselves admin privileges.",
+      "importance": "recommended",
+      "impact": 5,
+      "recommended": "Spring Security sessions; first admin provisioned securely; public signups have non-admin access",
+      "default": "preserve existing auth mechanism; detect from codebase",
+      "prefilled": false,
+      "prefilled_value": null,
+      "answer": {
+        "value": "preserve existing auth mechanism; detect from codebase",
+        "source": "user"
+      },
+      "depends_on": null,
+      "options": [
+        {
+          "value": "Spring Security sessions; first admin provisioned securely; public signups have non-admin access",
+          "label": "Spring Security sessions; securely provision the first admin; public signups get non-admin access (Recommended)"
+        },
+        {
+          "value": "Spring Security sessions; invite-only admin accounts",
+          "label": "Spring Security sessions; admin accounts are invite-only, no public signup"
+        },
+        {
+          "value": "External identity provider / single sign-on",
+          "label": "Use an external identity provider / single sign-on; specify provider"
+        },
+        {
+          "value": "Other",
+          "label": "Specify authentication framework and role policy"
+        }
+      ],
+      "allow_other": true,
+      "type": "single_select"
+    },
+    {
+      "id": "B5",
+      "kit": "backend",
+      "field": "nfr.sla",
+      "title": "Performance expectations",
+      "question": "Are there specific availability, response-time, or traffic requirements?",
+      "importance": "recommended",
+      "impact": 2,
+      "recommended": null,
+      "default": "match current production baseline; no regression",
+      "prefilled": false,
+      "prefilled_value": null,
+      "answer": {
+        "value": "not now needed",
+        "source": "user"
+      },
+      "depends_on": null,
+      "type": "text",
+      "options": []
+    },
+    {
+      "id": "G1",
+      "kit": "generic",
+      "field": "success.definition",
+      "title": "Definition of success",
+      "question": "What should be true for this work to be considered complete?",
+      "importance": "required",
+      "impact": 5,
+      "recommended": null,
+      "default": "feature parity with current system; all existing user-facing behaviors preserved",
+      "prefilled": true,
+      "prefilled_value": "Professional, distinctive, responsive UI across public, sign-in, sign-up, and admin pages; secure login and sign-up; only authorized admins can access dashboard and clinic-management data; existing clinic workflows and records preserved; Lombok used where it improves Java clarity; tests pass.",
+      "answer": {
+        "value": "Professional, distinctive, responsive UI across public, sign-in, sign-up, and admin pages; secure login and sign-up; only authorized admins can access dashboard and clinic-management data; existing clinic workflows and records preserved; Lombok used where it improves Java clarity; tests pass.",
+        "source": "user"
+      },
+      "depends_on": null,
+      "type": "text",
+      "options": []
+    },
+    {
+      "id": "G2",
+      "kit": "generic",
+      "field": "out_of_scope",
+      "title": "Out-of-scope boundaries",
+      "question": "Are there any features or changes you want explicitly excluded from this work?",
+      "importance": "recommended",
+      "impact": 2,
+      "recommended": null,
+      "default": "no explicit exclusions; infer from project structure",
+      "prefilled": false,
+      "prefilled_value": null,
+      "answer": {
+        "value": "infer from project structure",
+        "source": "user"
+      },
+      "depends_on": null,
+      "type": "text",
+      "options": []
+    },
+    {
+      "id": "G3",
+      "kit": "generic",
+      "field": "existing_tests.posture",
+      "title": "Existing tests",
+      "question": "How should existing tests be handled?",
+      "importance": "recommended",
+      "impact": 3,
+      "recommended": "All current tests must pass; add auth and access-control tests",
+      "default": "must pass",
+      "prefilled": false,
+      "prefilled_value": null,
+      "answer": {
+        "value": "must pass",
+        "source": "user"
+      },
+      "depends_on": null,
+      "options": [
+        {
+          "value": "All current tests must pass; add auth and access-control tests",
+          "label": "All existing tests must pass, plus tests for auth and role protection (Recommended)"
+        },
+        {
+          "value": "Rewrite tests with equivalent coverage",
+          "label": "Tests may be rewritten with equivalent coverage"
+        },
+        {
+          "value": "Ignore old tests and create new tests",
+          "label": "Ignore existing tests and create new tests"
+        }
+      ],
+      "allow_other": true,
+      "type": "single_select"
+    },
+    {
+      "id": "G5",
+      "kit": "generic",
+      "field": "constraints.additional",
+      "title": "Additional constraints",
+      "question": "List any additional requirements, exclusions, dependencies, compliance rules, or operational constraints not covered above.",
+      "importance": "optional",
+      "impact": 2,
+      "recommended": null,
+      "default": "None beyond the decisions listed in this specification.",
+      "prefilled": true,
+      "prefilled_value": "None beyond the decisions listed in this specification.",
+      "answer": {
+        "value": "None beyond the decisions listed in this specification.",
+        "source": "user"
+      },
+      "depends_on": null,
+      "type": "text",
+      "options": []
+    }
+  ]
+}

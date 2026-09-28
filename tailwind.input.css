@@ -1,0 +1,5 @@
+@import "tailwindcss";
+@source "./src/main/resources/static/home.html";
+@source "./src/main/resources/static/login.html";
+@source "./src/main/resources/static/signup.html";
+@source "./src/main/resources/static/index.html";

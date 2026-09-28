@@ -1,0 +1,136 @@
+{
+  "info": {
+    "name": "Doctor Appointment API",
+    "description": "Run requests in order to exercise clinic setup, slot booking, cancellation, filtering, validation, conflicts, dashboard totals, and doctor deactivation.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "doctorId", "value": "" },
+    { "key": "patientId", "value": "" },
+    { "key": "slotId", "value": "" },
+    { "key": "appointmentId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Doctors",
+      "item": [
+        {
+          "name": "Create doctor",
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('created', () => pm.response.to.have.status(201));", "pm.collectionVariables.set('doctorId', pm.response.json().id);"], "type": "text/javascript" } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"name\":\"Dr. Alex Morgan\",\"email\":\"alex.morgan@example.test\",\"specializations\":[\"Cardiology\",\"Internal Medicine\"]}" }, "url": "{{baseUrl}}/api/doctors" }
+        },
+        {
+          "name": "Reject invalid doctor",
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('validation error', () => pm.response.to.have.status(400));"], "type": "text/javascript" } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"name\":\"\",\"email\":\"not-an-email\",\"specializations\":[]}" }, "url": "{{baseUrl}}/api/doctors" }
+        },
+        {
+          "name": "Reject duplicate doctor email",
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('duplicate email conflict', () => pm.response.to.have.status(409));"], "type": "text/javascript" } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"name\":\"Duplicate Doctor\",\"email\":\"alex.morgan@example.test\",\"specializations\":[\"Cardiology\"]}" }, "url": "{{baseUrl}}/api/doctors" }
+        },
+        {
+          "name": "List doctors",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/doctors" }
+        },
+        {
+          "name": "Get doctor",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/doctors/{{doctorId}}" }
+        },
+        {
+          "name": "Update doctor and specializations",
+          "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"name\":\"Dr. Alex Morgan\",\"email\":\"alex.morgan@example.test\",\"specializations\":[\"Cardiology\",\"Neurology\"]}" }, "url": "{{baseUrl}}/api/doctors/{{doctorId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Patients",
+      "item": [
+        {
+          "name": "Create patient",
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('created', () => pm.response.to.have.status(201));", "pm.collectionVariables.set('patientId', pm.response.json().id);"], "type": "text/javascript" } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"name\":\"Jamie Patient\",\"email\":\"jamie.patient@example.test\",\"phone\":\"555-0100\"}" }, "url": "{{baseUrl}}/api/patients" }
+        },
+        {
+          "name": "List patients",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/patients" }
+        }
+      ]
+    },
+    {
+      "name": "Slots",
+      "item": [
+        {
+          "name": "Publish next-day slots",
+          "event": [
+            { "listen": "prerequest", "script": { "exec": ["const date = new Date();", "date.setDate(date.getDate() + 1);", "pm.collectionVariables.set('nextDate', [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-'));"], "type": "text/javascript" } },
+            { "listen": "test", "script": { "exec": ["pm.test('slots published', () => pm.response.to.have.status(201));", "pm.collectionVariables.set('slotId', pm.response.json()[0].id);"], "type": "text/javascript" } }
+          ],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"dateFrom\":\"{{nextDate}}\",\"dateTo\":\"{{nextDate}}\",\"timeFrom\":\"09:00:00\",\"timeTo\":\"11:00:00\",\"slotMinutes\":60}" }, "url": "{{baseUrl}}/api/doctors/{{doctorId}}/slots" }
+        },
+        {
+          "name": "Reject overlapping slot publication",
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('overlap conflict', () => pm.response.to.have.status(409));"], "type": "text/javascript" } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"dateFrom\":\"{{nextDate}}\",\"dateTo\":\"{{nextDate}}\",\"timeFrom\":\"09:00:00\",\"timeTo\":\"10:00:00\",\"slotMinutes\":60}" }, "url": "{{baseUrl}}/api/doctors/{{doctorId}}/slots" }
+        },
+        {
+          "name": "List slots filtered by date and specialization",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/slots?date={{nextDate}}&specialization=Cardiology&available=true" }
+        },
+        {
+          "name": "List this doctor's slots",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/doctors/{{doctorId}}/slots" }
+        }
+      ]
+    },
+    {
+      "name": "Appointments",
+      "item": [
+        {
+          "name": "Book a slot",
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('booked', () => pm.response.to.have.status(201));", "pm.collectionVariables.set('appointmentId', pm.response.json().id);"], "type": "text/javascript" } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"patientId\":\"{{patientId}}\",\"slotId\":\"{{slotId}}\"}" }, "url": "{{baseUrl}}/api/appointments" }
+        },
+        {
+          "name": "Reject booking an occupied slot",
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('already booked conflict', () => pm.response.to.have.status(409));"], "type": "text/javascript" } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"patientId\":\"{{patientId}}\",\"slotId\":\"{{slotId}}\"}" }, "url": "{{baseUrl}}/api/appointments" }
+        },
+        {
+          "name": "List doctor's appointments for today",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/doctors/{{doctorId}}/appointments/today" }
+        },
+        {
+          "name": "Cancel appointment and release slot",
+          "request": { "method": "POST", "url": "{{baseUrl}}/api/appointments/{{appointmentId}}/cancel" }
+        },
+        {
+          "name": "Rebook released slot",
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('released slot rebooked', () => pm.response.to.have.status(201));", "pm.collectionVariables.set('appointmentId', pm.response.json().id);"], "type": "text/javascript" } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"patientId\":\"{{patientId}}\",\"slotId\":\"{{slotId}}\"}" }, "url": "{{baseUrl}}/api/appointments" }
+        },
+        {
+          "name": "Cancel rebooked appointment",
+          "request": { "method": "POST", "url": "{{baseUrl}}/api/appointments/{{appointmentId}}/cancel" }
+        },
+        {
+          "name": "Reject repeated cancellation",
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('repeated cancellation conflict', () => pm.response.to.have.status(409));"], "type": "text/javascript" } }],
+          "request": { "method": "POST", "url": "{{baseUrl}}/api/appointments/{{appointmentId}}/cancel" }
+        }
+      ]
+    },
+    {
+      "name": "Clinic dashboard and remove doctor",
+      "item": [
+        { "name": "View dashboard counts", "request": { "method": "GET", "url": "{{baseUrl}}/api/dashboard" } },
+        {
+          "name": "Deactivate doctor",
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('doctor deactivated', () => pm.response.to.have.status(204));"], "type": "text/javascript" } }],
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/api/doctors/{{doctorId}}" }
+        }
+      ]
+    }
+  ]
+}

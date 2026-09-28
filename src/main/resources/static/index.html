@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f7f8">
+    <title>Carepoint | Clinic dashboard</title>
+    <link rel="stylesheet" href="/tailwind.css">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar">
+        <a class="brand" href="/" aria-label="Carepoint home">
+            <span class="brand-mark">+</span>
+            <span>carepoint<small>CARE, MADE SIMPLE</small></span>
+        </a>
+        <nav class="main-nav" aria-label="Main navigation">
+            <a class="nav-link active" href="#overview" data-view="overview" aria-current="page"><span class="nav-icon">⌂</span> Overview</a>
+            <a class="nav-link" href="#appointments" data-view="appointments"><span class="nav-icon">▦</span> Appointments</a>
+            <a class="nav-link" href="#schedule" data-view="schedule"><span class="nav-icon">◷</span> Schedule & slots</a>
+            <a class="nav-link" href="#doctors" data-view="doctors"><span class="nav-icon">♙</span> Doctors</a>
+            <a class="nav-link" href="#patients" data-view="patients"><span class="nav-icon">♡</span> Patients</a>
+        </nav>
+        <div class="sidebar-bottom">
+            <div class="user-profile">
+                <div class="avatar avatar-user" id="user-avatar">CP</div>
+                <div><strong id="user-name">Your account</strong><small>Workspace</small></div>
+                <button class="logout-button" id="logout-button" type="button">Sign out</button>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="breadcrumbs"><span>Good care starts with a warm welcome.</span><span class="crumb-slash">/</span><strong id="page-crumb">Overview</strong></div>
+            <div class="topbar-actions">
+                <span class="today-label" id="header-date"></span>
+                <button class="icon-button" id="refresh-button" aria-label="Refresh dashboard" title="Refresh">↻</button>
+                <button class="top-logout-button" id="top-logout-button" type="button">Sign out</button>
+                <div class="avatar avatar-user top-avatar" id="top-user-avatar">CP</div>
+            </div>
+        </header>
+
+        <div class="content-wrap">
+            <section class="view active" id="view-overview">
+                <section class="dashboard-hero">
+                    <div class="hero-copy">
+                        <div class="eyebrow"><span class="live-dot"></span> CLINIC OVERVIEW</div>
+                        <h1>Care that puts people first<span class="heading-period">.</span></h1>
+                        <p class="subtitle">A healthier day begins with a team that listens. Bring your appointments, care team, and patients together in one simple place.</p>
+                        <div class="hero-actions">
+                            <button class="button button-primary" data-go="schedule">Book an appointment <span>→</span></button>
+                            <span class="hero-note"><span class="live-dot"></span> Here for you, every day</span>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <svg class="workspace-illustration" viewBox="0 0 460 340" role="img" aria-label="Illustration of a clinic professional and appointment card" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="338" cy="74" r="42" fill="#D9ECFF"/>
+                            <circle cx="92" cy="273" r="33" fill="#D9ECFF"/>
+                            <rect x="105" y="39" width="260" height="263" rx="27" fill="#fff" stroke="#D8E8F7" stroke-width="3"/>
+                            <rect x="128" y="62" width="214" height="22" rx="11" fill="#EFF7FF"/>
+                            <circle cx="146" cy="73" r="4" fill="#277BC1"/>
+                            <rect x="160" y="69" width="96" height="7" rx="3.5" fill="#BBD8F2"/>
+                            <circle cx="234" cy="137" r="37" fill="#F0C6A6"/>
+                            <path d="M198 135c0-25 15-39 37-39 23 0 38 17 34 39-11-12-22-17-36-17-13 0-25 6-35 17Z" fill="#294D70"/>
+                            <path d="M173 272c3-57 25-91 61-91s58 34 61 91H173Z" fill="#2B80BE"/>
+                            <path d="m211 183 23 29 23-29 17 89h-80l17-89Z" fill="#fff"/>
+                            <path d="M234 212v26m-13-13h26" stroke="#2B80BE" stroke-width="7" stroke-linecap="round"/>
+                            <rect x="292" y="208" width="120" height="72" rx="17" fill="#fff" stroke="#D8E8F7" stroke-width="2"/>
+                            <circle cx="316" cy="232" r="10" fill="#E6F3FF"/>
+                            <path d="M312 232h8m-4-4v8" stroke="#277BC1" stroke-width="2" stroke-linecap="round"/>
+                            <rect x="335" y="228" width="58" height="7" rx="3.5" fill="#BBD8F2"/>
+                            <rect x="312" y="250" width="80" height="6" rx="3" fill="#E2EEF8"/>
+                        </svg>
+                    </div>
+                </section>
+
+                <div class="metrics-grid">
+                    <article class="metric-card">
+                        <div class="metric-head"><span class="metric-label">Total doctors</span><span class="metric-icon mint">♙</span></div>
+                        <div class="metric-number" id="metric-doctors">—</div>
+                        <div class="metric-foot"><span class="metric-note">Care professionals</span></div>
+                    </article>
+                    <article class="metric-card">
+                        <div class="metric-head"><span class="metric-label">Registered patients</span><span class="metric-icon lavender">♡</span></div>
+                        <div class="metric-number" id="metric-patients">—</div>
+                        <div class="metric-foot"><span class="metric-note">In your clinic</span></div>
+                    </article>
+                    <article class="metric-card">
+                        <div class="metric-head"><span class="metric-label">Open time slots</span><span class="metric-icon blue">◷</span></div>
+                        <div class="metric-number" id="metric-open">—</div>
+                        <div class="metric-foot"><span class="status-dot green"></span><span class="metric-note">Ready to be booked</span></div>
+                    </article>
+                    <article class="metric-card">
+                        <div class="metric-head"><span class="metric-label">Booked slots</span><span class="metric-icon peach">▦</span></div>
+                        <div class="metric-number" id="metric-booked">—</div>
+                        <div class="metric-foot"><span class="status-dot blue-dot"></span><span class="metric-note">On the schedule</span></div>
+                    </article>
+                </div>
+
+                <div class="section-heading">
+                    <div><div class="eyebrow">YOUR SCHEDULE</div><h2>Find an appointment</h2></div>
+                    <button class="text-button" data-go="schedule">View full schedule <span>→</span></button>
+                </div>
+                <article class="panel">
+                    <div class="filter-row overview-filters">
+                        <label class="search-field"><span>⌕</span><input id="overview-date" type="date" aria-label="Filter slots by date"></label>
+                        <label class="select-field"><select id="overview-specialization"><option value="">All specializations</option></select></label>
+                        <button class="button button-light" id="overview-filter-button">Filter</button>
+                    </div>
+                    <div id="overview-slots" class="slot-list"></div>
+                </article>
+
+                <div class="section-heading compact-heading">
+                    <div><div class="eyebrow">TODAY</div><h2>Doctor appointments</h2></div>
+                    <button class="text-button" data-go="appointments">Manage appointments <span>→</span></button>
+                </div>
+                <article class="panel">
+                    <div class="filter-row">
+                        <label class="select-field wide-select"><select id="overview-doctor-select" aria-label="Choose doctor for today's appointments"></select></label>
+                        <button class="button button-light" id="overview-today-button">Show appointments</button>
+                    </div>
+                    <div id="overview-today-list" class="empty-inline">Select a doctor to see today's appointments.</div>
+                </article>
+            </section>
+
+            <section class="view" id="view-appointments">
+                <div class="page-heading">
+                    <div><div class="eyebrow">YOUR CLINIC SCHEDULE</div><h1>Appointments<span class="heading-period">.</span></h1><p class="subtitle">See every booked visit, including upcoming appointments.</p></div>
+                </div>
+                <article class="panel page-panel">
+                    <div class="panel-topline">
+                        <div><h2>All booked appointments</h2><p class="panel-subtitle" id="appointment-date-label"></p></div>
+                        <div class="inline-controls appointment-filters">
+                            <label class="select-field"><select id="appointment-date-range" aria-label="Filter appointments by date">
+                                <option value="all">All dates</option>
+                                <option value="today">Today</option>
+                                <option value="tomorrow">Tomorrow</option>
+                                <option value="custom">Choose a date</option>
+                            </select></label>
+                            <label class="search-field hidden" id="appointment-custom-date-field"><span>⌕</span><input id="appointment-custom-date" type="date" aria-label="Choose appointment date"></label>
+                            <button class="button button-light" id="appointments-load-button">↻ Show appointments</button>
+                        </div>
+                    </div>
+                    <div id="appointments-list" class="table-wrap"></div>
+                </article>
+            </section>
+
+            <section class="view" id="view-schedule">
+                <div class="page-heading">
+                    <div><div class="eyebrow">AVAILABILITY</div><h1>Schedule & slots<span class="heading-period">.</span></h1><p class="subtitle">Publish a doctor's working hours and find open appointments.</p></div>
+                </div>
+                <div class="two-column-layout">
+                    <article class="panel page-panel">
+                        <div class="panel-topline"><div><h2>Publish availability</h2><p class="panel-subtitle">Create bookable slots across a date range.</p></div><span class="panel-icon">◷</span></div>
+                        <form id="publish-form" class="form-grid">
+                            <label class="form-field full-width"><span>Doctor</span><select name="doctorId" id="publish-doctor" required></select></label>
+                            <label class="form-field"><span>Start date</span><input type="date" name="dateFrom" required></label>
+                            <label class="form-field"><span>End date</span><input type="date" name="dateTo" required></label>
+                            <label class="form-field"><span>Daily start</span><input type="time" name="timeFrom" value="09:00" required></label>
+                            <label class="form-field"><span>Daily finish</span><input type="time" name="timeTo" value="17:00" required></label>
+                            <label class="form-field"><span>Slot length</span><select name="slotMinutes"><option value="15">15 minutes</option><option value="20">20 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select></label>
+                            <label class="form-field"><span>Working days <small>(optional)</small></span><select name="daysOfWeek" id="working-days" multiple size="3" aria-label="Working days; leave blank for every day"><option value="MONDAY">Monday</option><option value="TUESDAY">Tuesday</option><option value="WEDNESDAY">Wednesday</option><option value="THURSDAY">Thursday</option><option value="FRIDAY">Friday</option><option value="SATURDAY">Saturday</option><option value="SUNDAY">Sunday</option></select></label>
+                            <p class="field-hint full-width">Leave weekdays unselected to publish for every day in the range. Past slots and overlapping slots are rejected.</p>
+                            <div class="full-width"><button class="button button-primary" type="submit">Publish slots <span>→</span></button></div>
+                        </form>
+                    </article>
+                    <article class="panel page-panel">
+                        <div class="panel-topline"><div><h2>Book an open slot</h2><p class="panel-subtitle">Choose a patient and an available time.</p></div><span class="panel-icon booking-icon">＋</span></div>
+                        <form id="booking-form" class="form-grid">
+                            <label class="form-field full-width"><span>Patient</span><select name="patientId" id="booking-patient" required></select></label>
+                            <label class="form-field full-width"><span>Available slot</span><select name="slotId" id="booking-slot" required></select></label>
+                            <p class="field-hint full-width">Use the filters below to find availability. Booking a slot makes it unavailable to other patients.</p>
+                            <div class="full-width"><button class="button button-primary" type="submit">Confirm booking <span>→</span></button></div>
+                        </form>
+                    </article>
+                </div>
+                <article class="panel page-panel schedule-results">
+                    <div class="panel-topline"><div><h2>Available slots</h2><p class="panel-subtitle">Only future, unbooked appointment times are shown.</p></div></div>
+                    <div class="filter-row">
+                        <label class="search-field"><span>⌕</span><input id="schedule-date" type="date" aria-label="Filter by date"></label>
+                        <label class="select-field"><select id="schedule-specialization"><option value="">All specializations</option></select></label>
+                        <button class="button button-light" id="schedule-filter-button">Search</button>
+                    </div>
+                    <div id="schedule-slots" class="slot-list"></div>
+                </article>
+            </section>
+
+            <section class="view" id="view-doctors">
+                <div class="page-heading">
+                    <div><div class="eyebrow">CARE TEAM</div><h1>Doctors<span class="heading-period">.</span></h1><p class="subtitle">Add doctors and keep their specialties up to date.</p></div>
+                </div>
+                <div class="two-column-layout doctor-layout">
+                    <article class="panel page-panel">
+                        <div class="panel-topline"><div><h2 id="doctor-form-title">Add a doctor</h2><p class="panel-subtitle">Specializations are comma separated.</p></div><span class="panel-icon">♙</span></div>
+                        <form id="doctor-form" class="form-grid">
+                            <input type="hidden" name="doctorId" id="doctor-edit-id">
+                            <label class="form-field full-width"><span>Full name</span><input name="name" placeholder="e.g. Dr. Alex Morgan" required></label>
+                            <label class="form-field full-width"><span>Email address</span><input name="email" type="email" placeholder="doctor@clinic.com" required></label>
+                            <label class="form-field full-width"><span>Specializations</span><input name="specializations" placeholder="Cardiology, Internal Medicine" required></label>
+                            <div class="form-actions full-width"><button class="button button-primary" id="doctor-submit-button" type="submit">Add doctor <span>→</span></button><button class="button button-light hidden" id="doctor-cancel-edit" type="button">Cancel edit</button></div>
+                        </form>
+                    </article>
+                    <article class="panel page-panel doctor-list-panel">
+                        <div class="panel-topline"><div><h2>Care team</h2><p class="panel-subtitle" id="doctor-count-label">Your clinic's doctors</p></div></div>
+                        <div id="doctors-list" class="doctor-list"></div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="view" id="view-patients">
+                <div class="page-heading">
+                    <div><div class="eyebrow">PATIENT DIRECTORY</div><h1>Patients<span class="heading-period">.</span></h1><p class="subtitle">Register patients and select them when confirming a visit.</p></div>
+                </div>
+                <div class="two-column-layout patient-layout">
+                    <article class="panel page-panel">
+                        <div class="panel-topline"><div><h2 id="patient-form-title">Register a patient</h2><p class="panel-subtitle">Add a patient to your clinic directory.</p></div><span class="panel-icon booking-icon">♡</span></div>
+                        <form id="patient-form" class="form-grid">
+                            <input type="hidden" name="patientId" id="patient-edit-id">
+                            <label class="form-field full-width"><span>Full name</span><input name="name" placeholder="Patient name" required></label>
+                            <label class="form-field full-width"><span>Email address</span><input name="email" type="email" placeholder="patient@example.com" required></label>
+                            <label class="form-field full-width"><span>Phone number</span><input name="phone" type="tel" placeholder="555-0100" required></label>
+                            <div class="form-actions full-width"><button class="button button-primary" id="patient-submit-button" type="submit">Add patient <span>→</span></button><button class="button button-light hidden" id="patient-cancel-edit" type="button">Cancel</button></div>
+                        </form>
+                    </article>
+                    <article class="panel page-panel">
+                        <div class="panel-topline"><div><h2>Patient directory</h2><p class="panel-subtitle" id="patient-count-label">Registered patients</p></div></div>
+                        <div id="patients-list" class="patient-list"></div>
+                    </article>
+                </div>
+            </section>
+
+            <footer class="footer"><span class="footer-mark">+</span> Carepoint <span class="footer-dot">·</span> Care that keeps moving.</footer>
+        </div>
+    </main>
+</div>
+<div id="toast-region" class="toast-region" aria-live="polite"></div>
+<script src="/app.js" defer></script>
+</body>
+</html>
