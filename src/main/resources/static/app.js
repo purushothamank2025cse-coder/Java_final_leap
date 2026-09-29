@@ -356,7 +356,8 @@ byId('appointment-date-label').textContent = 'All booked visits across your clin
 
 byId('publish-form').addEventListener('submit', async (event) => {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
+    const formElement = event.currentTarget;
+    const form = new FormData(formElement);
     const doctorId = form.get('doctorId');
     const daysOfWeek = [...byId('working-days').selectedOptions].map((option) => option.value);
     const payload = {
@@ -371,7 +372,7 @@ byId('publish-form').addEventListener('submit', async (event) => {
         const created = await request(`/doctors/${doctorId}/slots`, { method: 'POST', body: JSON.stringify(payload) });
         toast(`${created.length} ${created.length === 1 ? 'slot' : 'slots'} published successfully.`);
         await Promise.all([loadDashboard(), loadSlots('schedule')]);
-        event.currentTarget.reset();
+        formElement.reset();
         byId('publish-doctor').value = doctorId;
     } catch (error) {
         toast(error.message, 'error');
@@ -380,14 +381,15 @@ byId('publish-form').addEventListener('submit', async (event) => {
 
 byId('booking-form').addEventListener('submit', async (event) => {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
+    const formElement = event.currentTarget;
+    const form = new FormData(formElement);
     try {
         await request('/appointments', {
             method: 'POST',
             body: JSON.stringify({ patientId: Number(form.get('patientId')), slotId: Number(form.get('slotId')) })
         });
         toast('Appointment booked. The slot is no longer available.');
-        event.currentTarget.reset();
+        formElement.reset();
         await Promise.all([loadDashboard(), loadSlots('schedule')]);
     } catch (error) {
         toast(error.message, 'error');

@@ -1,5 +1,13 @@
 package com.example.doctor_app.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.doctor_app.dto.BookAppointmentRequest;
 import com.example.doctor_app.exception.ApiException;
 import com.example.doctor_app.model.Appointment;
@@ -8,18 +16,12 @@ import com.example.doctor_app.model.DoctorSlot;
 import com.example.doctor_app.model.SlotStatus;
 import com.example.doctor_app.repository.AppointmentRepository;
 import com.example.doctor_app.repository.DoctorSlotRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @Transactional
 public class AppointmentService {
     private final AppointmentRepository appointmentRepository;
+    
     private final DoctorSlotRepository slotRepository;
     private final PatientService patientService;
 
